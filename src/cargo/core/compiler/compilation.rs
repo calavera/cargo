@@ -275,37 +275,37 @@ impl<'cfg> Compilation<'cfg> {
         // crate properties which might require rebuild upon change
         // consider adding the corresponding properties to the hash
         // in BuildContext::target_metadata()
-        cmd.env("CARGO_MANIFEST_DIR", pkg.root())
-            .env("CARGO_PKG_VERSION_MAJOR", &pkg.version().major.to_string())
-            .env("CARGO_PKG_VERSION_MINOR", &pkg.version().minor.to_string())
-            .env("CARGO_PKG_VERSION_PATCH", &pkg.version().patch.to_string())
-            .env(
+        cmd.env_missing("CARGO_MANIFEST_DIR", pkg.root())
+            .env_missing("CARGO_PKG_VERSION_MAJOR", &pkg.version().major.to_string())
+            .env_missing("CARGO_PKG_VERSION_MINOR", &pkg.version().minor.to_string())
+            .env_missing("CARGO_PKG_VERSION_PATCH", &pkg.version().patch.to_string())
+            .env_missing(
                 "CARGO_PKG_VERSION_PRE",
                 &pre_version_component(pkg.version()),
             )
-            .env("CARGO_PKG_VERSION", &pkg.version().to_string())
-            .env("CARGO_PKG_NAME", &*pkg.name())
-            .env(
+            .env_missing("CARGO_PKG_VERSION", &pkg.version().to_string())
+            .env_missing("CARGO_PKG_NAME", &*pkg.name())
+            .env_missing(
                 "CARGO_PKG_DESCRIPTION",
                 metadata.description.as_ref().unwrap_or(&String::new()),
             )
-            .env(
+            .env_missing(
                 "CARGO_PKG_HOMEPAGE",
                 metadata.homepage.as_ref().unwrap_or(&String::new()),
             )
-            .env(
+            .env_missing(
                 "CARGO_PKG_REPOSITORY",
                 metadata.repository.as_ref().unwrap_or(&String::new()),
             )
-            .env(
+            .env_missing(
                 "CARGO_PKG_LICENSE",
                 metadata.license.as_ref().unwrap_or(&String::new()),
             )
-            .env(
+            .env_missing(
                 "CARGO_PKG_LICENSE_FILE",
                 metadata.license_file.as_ref().unwrap_or(&String::new()),
             )
-            .env("CARGO_PKG_AUTHORS", &pkg.authors().join(":"))
+            .env_missing("CARGO_PKG_AUTHORS", &pkg.authors().join(":"))
             .cwd(pkg.root());
         Ok(cmd)
     }

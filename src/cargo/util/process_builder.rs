@@ -96,6 +96,15 @@ impl ProcessBuilder {
         self
     }
 
+    /// (chainable) Sets an environment variable for the process if the process doesn't include it already.
+    pub fn env_missing<T: AsRef<OsStr>>(&mut self, key: &str, val: T) -> &mut ProcessBuilder {
+        if !self.env.contains_key(key) {
+            self.env
+                .insert(key.to_string(), Some(val.as_ref().to_os_string()));
+        }
+        self
+    }
+
     /// (chainable) Unsets an environment variable for the process.
     pub fn env_remove(&mut self, key: &str) -> &mut ProcessBuilder {
         self.env.insert(key.to_string(), None);
